@@ -268,31 +268,23 @@ const TerminalHeader = () => {
     // Help command with all new commands
     'help': () => {
       const commands = (t('terminal.help.commands') as unknown) as Record<string, string>;
-      return (
-        <div className="space-y-1">
-          <div className="text-accent">{t('terminal.help.title')}</div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-1 text-sm">
-            {Object.entries(commands).map(([cmd, desc]) => (
-              <div key={cmd}>{cmd.padEnd(16, ' ')} - {desc}</div>
-            ))}
-          </div>
-        </div>
-      );
+      const title = t('terminal.help.title');
+      let helpText = title + '\n';
+      Object.entries(commands).forEach(([cmd, desc]) => {
+        helpText += `${cmd.padEnd(20, ' ')} - ${desc}\n`;
+      });
+      return helpText;
     },
     
     // Help command in Spanish
     'ayuda': () => {
       const commands = (t('terminal.help.commands') as unknown) as Record<string, string>;
-      return (
-        <div className="space-y-1">
-          <div className="text-accent">{t('terminal.help.title')}</div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-1 text-sm">
-            {Object.entries(commands).map(([cmd, desc]) => (
-              <div key={cmd}>{cmd.padEnd(16, ' ')} - {desc}</div>
-            ))}
-          </div>
-        </div>
-      );
+      const title = t('terminal.help.title');
+      let helpText = title + '\n';
+      Object.entries(commands).forEach(([cmd, desc]) => {
+        helpText += `${cmd.padEnd(20, ' ')} - ${desc}\n`;
+      });
+      return helpText;
     }
   };
 
