@@ -19,7 +19,7 @@ interface Commit {
 }
 
 const GitTimeline = () => {
-  const { t } = useLanguage();
+  const { t, translations } = useLanguage();
   const [selectedCommit, setSelectedCommit] = useState<string>('a1b2c3d');
 
   const commits: Commit[] = [
@@ -29,7 +29,7 @@ const GitTimeline = () => {
       message: `deploy: ${t('portfolio.timeline.entries.javaMastery')}`,
       description: t('portfolio.timeline.descriptions.javaMastery'),
       type: 'deploy',
-      changes: (t('portfolio.timeline.changes.javaMastery') as unknown) as string[],
+      changes: translations.portfolio.timeline.changes.javaMastery as string[],
       stats: { files: 150, additions: 25000, deletions: 5000 }
     },
     {
@@ -38,7 +38,7 @@ const GitTimeline = () => {
       message: `refactor: ${t('portfolio.timeline.entries.spainMigration')}`,
       description: t('portfolio.timeline.descriptions.spainMigration'),
       type: 'refactor',
-      changes: (t('portfolio.timeline.changes.spainMigration') as unknown) as string[],
+      changes: translations.portfolio.timeline.changes.spainMigration as string[],
       stats: { files: 1, additions: 1, deletions: 0 }
     },
     {
@@ -47,7 +47,7 @@ const GitTimeline = () => {
       message: `feat: ${t('portfolio.timeline.entries.houseConstruction')}`,
       description: t('portfolio.timeline.descriptions.houseConstruction'),
       type: 'feat',
-      changes: (t('portfolio.timeline.changes.houseConstruction') as unknown) as string[],
+      changes: translations.portfolio.timeline.changes.houseConstruction as string[],
       stats: { files: 3, additions: 500, deletions: 0 }
     },
     {
@@ -56,7 +56,7 @@ const GitTimeline = () => {
       message: `feat: ${t('portfolio.timeline.entries.translationEmpire')}`,
       description: t('portfolio.timeline.descriptions.translationEmpire'),
       type: 'feat',
-      changes: (t('portfolio.timeline.changes.translationEmpire') as unknown) as string[],
+      changes: translations.portfolio.timeline.changes.translationEmpire as string[],
       stats: { files: 62, additions: 10002, deletions: 200 }
     },
     {
@@ -65,7 +65,7 @@ const GitTimeline = () => {
       message: `init: ${t('portfolio.timeline.entries.universityMigration')}`,
       description: t('portfolio.timeline.descriptions.universityMigration'),
       type: 'init',
-      changes: (t('portfolio.timeline.changes.universityMigration') as unknown) as string[],
+      changes: translations.portfolio.timeline.changes.universityMigration as string[],
       stats: { files: 1, additions: 100, deletions: 0 }
     }
   ];

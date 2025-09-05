@@ -350,5 +350,30 @@
     font-family: 'Courier New', monospace;
     white-space: pre-line;
   }
+
+  /* Git diff colors */
+  .text-git-add {
+    color: hsl(var(--git-add));
+  }
+  
+  .text-git-remove {
+    color: hsl(var(--git-remove));
+  }
+  
+  .text-git-modify {
+    color: hsl(var(--git-modify));
+  }
+  
+  .bg-git-add\/10 {
+    background-color: hsl(var(--git-add) / 0.1);
+  }
+  
+  .bg-git-remove\/10 {
+    background-color: hsl(var(--git-remove) / 0.1);
+  }
+  
+  .bg-git-modify\/10 {
+    background-color: hsl(var(--git-modify) / 0.1);
+  }
 }
 

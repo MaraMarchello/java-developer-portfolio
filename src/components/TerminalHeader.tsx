@@ -78,7 +78,7 @@ const TerminalHeader = () => {
     'git log': 'Scrolling to Timeline section...',
     'clear': '',
     
-    // Theme commands
+    
     'theme dark': () => {
       setTheme('dark');
       return t('terminal.responses.themeChanged.dark');
@@ -98,7 +98,7 @@ const TerminalHeader = () => {
       return t('terminal.responses.currentTheme', { theme, icon });
     },
     
-    // Theme commands in Spanish
+    
     'tema oscuro': () => {
       setTheme('dark');
       return t('terminal.responses.themeChanged.dark');
@@ -118,7 +118,7 @@ const TerminalHeader = () => {
       return t('terminal.responses.currentTheme', { theme, icon });
     },
 
-    // Language commands
+    
     'lang en': () => {
       setLanguage('en');
       return t('terminal.responses.languageChanged.en');
@@ -140,7 +140,7 @@ const TerminalHeader = () => {
       return t('terminal.responses.currentLanguage', { language: langName, flag });
     },
     
-    // Language commands in Spanish
+    
     'idioma en': () => {
       setLanguage('en');
       return t('terminal.responses.languageChanged.en');
@@ -162,7 +162,7 @@ const TerminalHeader = () => {
       return t('terminal.responses.currentLanguage', { language: langName, flag });
     },
     
-    // Search command
+    
     'find': (keyword?: string) => {
       if (!keyword) {
         return t('terminal.responses.searchUsage');
@@ -186,7 +186,7 @@ const TerminalHeader = () => {
       );
     },
     
-    // Search command in Spanish
+    
     'buscar': (keyword?: string) => {
       if (!keyword) {
         return t('terminal.responses.searchUsage');
@@ -210,27 +210,27 @@ const TerminalHeader = () => {
       );
     },
     
-    // Tree command
+    
     'tree': () => (
       <pre className="text-sm font-mono whitespace-pre-wrap text-accent">
         {getPortfolioTreeWithLanguage(translations)}
       </pre>
     ),
     
-    // Tree command in Spanish
+    
     'árbol': () => (
       <pre className="text-sm font-mono whitespace-pre-wrap text-accent">
         {getPortfolioTreeWithLanguage(translations)}
       </pre>
     ),
     
-    // Date command
+    
     'date': () => {
       const now = new Date();
       return `${now.toDateString()} ${now.toLocaleTimeString()}`;
     },
     
-    // Social commands
+    
     'ssh github': () => {
       window.open('https://github.com/MaraMarchello', '_blank');
       return 'Connecting to GitHub... 🐙';
@@ -240,7 +240,7 @@ const TerminalHeader = () => {
       return 'Fetching LinkedIn profile... 💼';
     },
     
-    // Resume command
+    
     'download resume': () => {
       downloadResume();
       return 'Downloading resume... 📄';
@@ -250,10 +250,9 @@ const TerminalHeader = () => {
       return 'Downloading Marat_Nurmukhametov_Resume.pdf... 📄';
     },
     
-    // Enhanced hire me
+    
     'sudo hire-me': 'Opening enhanced contact form with elevated privileges... 🔐',
     
-    // Fun commands
     'matrix': () => <MatrixAnimation />,
     'cowsay': (message?: string) => <CowSay message={message || 'Hello! I am a Java developer!'} />,
     'fortune': () => (
@@ -265,26 +264,38 @@ const TerminalHeader = () => {
     'hack': () => <HackingSimulation />,
     'exit': 'Are you sure you want to leave? 🤔',
     
-    // Help command with all new commands
+    
     'help': () => {
-      const commands = (t('terminal.help.commands') as unknown) as Record<string, string>;
+      const commands = translations.terminal.help.commands as Record<string, string>;
       const title = t('terminal.help.title');
-      let helpText = title + '\n';
-      Object.entries(commands).forEach(([cmd, desc]) => {
-        helpText += `${cmd.padEnd(20, ' ')} - ${desc}\n`;
-      });
-      return helpText;
+      return (
+        <div className="space-y-1">
+          <div className="text-accent mb-2">{title}</div>
+          {Object.entries(commands).map(([cmd, desc], index) => (
+            <div key={index} className="flex">
+              <span className="text-primary font-mono w-48 flex-shrink-0">{cmd}</span>
+              <span className="text-muted-foreground ml-2">- {desc}</span>
+            </div>
+          ))}
+        </div>
+      );
     },
     
-    // Help command in Spanish
+    
     'ayuda': () => {
-      const commands = (t('terminal.help.commands') as unknown) as Record<string, string>;
+      const commands = translations.terminal.help.commands as Record<string, string>;
       const title = t('terminal.help.title');
-      let helpText = title + '\n';
-      Object.entries(commands).forEach(([cmd, desc]) => {
-        helpText += `${cmd.padEnd(20, ' ')} - ${desc}\n`;
-      });
-      return helpText;
+      return (
+        <div className="space-y-1">
+          <div className="text-accent mb-2">{title}</div>
+          {Object.entries(commands).map(([cmd, desc], index) => (
+            <div key={index} className="flex">
+              <span className="text-primary font-mono w-48 flex-shrink-0">{cmd}</span>
+              <span className="text-muted-foreground ml-2">- {desc}</span>
+            </div>
+          ))}
+        </div>
+      );
     }
   };
 
@@ -325,7 +336,7 @@ const TerminalHeader = () => {
       return;
     }
     
-    // Handle commands with arguments
+    
     let output: string | React.ReactNode;
     
     if (command === 'find') {
@@ -343,12 +354,12 @@ const TerminalHeader = () => {
         output = 'Usage: theme [dark|light|toggle]';
       }
     } else {
-      // Try exact command match first
+      
       const exactMatch = availableCommands[fullCommand];
       if (exactMatch) {
         output = typeof exactMatch === 'function' ? exactMatch() : exactMatch;
       } else {
-        // Try base command match
+        
         const baseMatch = availableCommands[command];
         if (baseMatch) {
           output = typeof baseMatch === 'function' ? baseMatch(args) : baseMatch;
@@ -360,7 +371,7 @@ const TerminalHeader = () => {
     
     setCommandHistory(prev => [...prev, { command: cmd, output }]);
     
-    // Scroll to sections based on command
+    
     if (fullCommand.startsWith('cat ') || command === 'git' || command === 'whoami') {
       const section = fullCommand.includes('about') || command === 'whoami' ? 'about' :
                      fullCommand.includes('timeline') || fullCommand === 'git log' ? 'timeline' :
@@ -386,7 +397,7 @@ const TerminalHeader = () => {
   };
 
   const downloadResume = () => {
-    // Create a temporary link element to trigger download
+    
     const link = document.createElement('a');
     link.href = '/CV_Marat_Nurmukhametov_eng.pdf';
     link.download = 'Marat_Nurmukhametov_Resume.pdf';
@@ -406,7 +417,7 @@ const TerminalHeader = () => {
   return (
     <section className="min-h-screen flex items-center justify-center p-8">
       <div className="terminal-window w-full max-w-4xl">
-        {/* Terminal header */}
+        
         <div className="terminal-header">
           <div className="terminal-dot red"></div>
           <div className="terminal-dot yellow"></div>
@@ -414,10 +425,10 @@ const TerminalHeader = () => {
           <span className="text-muted-foreground text-sm ml-4">developer-portfolio — bash — 120x40</span>
         </div>
         
-        {/* Terminal content */}
+        
         <div className="p-6 h-96 overflow-y-auto">
           <div className="space-y-2">
-            {/* Initial commands animation */}
+            
             {initialCommands.map((cmd, index) => (
               <div key={index} className="space-y-2">
                 <div className="flex">
@@ -428,7 +439,7 @@ const TerminalHeader = () => {
               </div>
             ))}
             
-            {/* Command history */}
+            
             {commandHistory.map((cmd, index) => (
               <div key={index} className="space-y-2">
                 <div className="flex">
@@ -439,7 +450,7 @@ const TerminalHeader = () => {
               </div>
             ))}
             
-            {/* Current prompt */}
+            
             {showPrompt && (
               <div className="flex">
                 <span className="text-primary">developer@portfolio:~$ </span>
@@ -458,7 +469,7 @@ const TerminalHeader = () => {
           </div>
         </div>
         
-        {/* Scroll hint */}
+        
         <div className="text-center mt-6">
           <p className="text-muted-foreground text-sm animate-pulse">
 {t('terminal.scrollHint')}
@@ -466,7 +477,7 @@ const TerminalHeader = () => {
         </div>
       </div>
 
-      {/* Hire Me Dialog */}
+            
       <Dialog open={showHireDialog} onOpenChange={setShowHireDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
